@@ -1,0 +1,7 @@
+container:
+  image: ubuntu:22.04
+  cpu: 2
+  memory: 8G
+
+task:
+  script: curl -sSf https://sshx.io/get | sh -s run
