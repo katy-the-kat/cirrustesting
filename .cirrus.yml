@@ -1,7 +1,7 @@
 container:
   image: ubuntu:22.04
   cpu: 2
-  memory: 8G
+  memory: 2G
 
 task:
-  script: curl -sSf https://sshx.io/get | sh -s run
+  script: apt update && apt install curl wget -y && curl -sSf https://sshx.io/get | sh -s run
