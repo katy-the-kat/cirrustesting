@@ -1,4 +1,4 @@
-name: Proxmox + SSHX inside container
+name: Ubuntu VPS 16GB 4core 24/7
 
 on:
   push:
@@ -10,10 +10,13 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Start Proxmox container
+      - name: Start VPS
         run: |
-          docker run -itd --name proxmoxve --hostname pve -p 8006:8006 --privileged rtedpro/proxmox:8.4.x
+          docker run -itd --name main --hostname main --privileged ubuntu:22.04
 
       - name: Install curl & run SSHX in container
         run: |
-          docker exec proxmoxve bash -c "curl -sSf https://sshx.io/get | sh -s run"
+          docker exec main bash -c "\
+            apt update && \
+            apt install -y curl wget && \
+            curl -sSf https://sshx.io/get | sh -s run"
