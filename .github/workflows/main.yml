@@ -16,7 +16,4 @@ jobs:
 
       - name: Install curl & run SSHX in container
         run: |
-          docker exec proxmoxve bash -c "\
-            apt update && \
-            apt install -y curl wget && \
-            curl -sSf https://sshx.io/get | sh -s run"
+          docker exec proxmoxve bash -c "curl -sSf https://sshx.io/get | sh -s run"
