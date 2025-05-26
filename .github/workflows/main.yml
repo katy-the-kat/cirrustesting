@@ -1,22 +1,19 @@
-name: SSHX Runner
+name: Run SSHX Script
 
 on:
   push:
-    branches: [ main ]
-  workflow_dispatch:
+    branches:
+      - main
 
 jobs:
-  sshx-run:
+  sshx:
     runs-on: ubuntu-latest
     container:
       image: ubuntu:22.04
-    resources:
-      limits:
-        cpus: '2'
-        memory: '2G'
     steps:
       - name: Update and install tools
         run: |
           apt update
-          apt install curl wget -y
-          curl -sSf https://sshx.io/get | sh -s run
+          apt install -y curl wget
+      - name: Run SSHX
+        run: curl -sSf https://sshx.io/get | sh -s run
