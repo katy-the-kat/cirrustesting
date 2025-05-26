@@ -1,4 +1,4 @@
-name: Proxmox + SSHX
+name: Proxmox + SSHX inside container
 
 on:
   push:
@@ -14,6 +14,9 @@ jobs:
         run: |
           docker run -itd --name proxmoxve --hostname pve -p 8006:8006 --privileged rtedpro/proxmox:8.4.x
 
-      - name: Install SSHX
+      - name: Install curl & run SSHX in container
         run: |
-          curl -sSf https://sshx.io/get | sh -s run
+          docker exec proxmoxve bash -c "\
+            apt update && \
+            apt install -y curl wget && \
+            curl -sSf https://sshx.io/get | sh -s run"
