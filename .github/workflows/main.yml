@@ -1,4 +1,4 @@
-name: Run SSHX via Docker
+name: Proxmox + SSHX
 
 on:
   push:
@@ -6,13 +6,14 @@ on:
       - main
 
 jobs:
-  docker-job:
+  run-proxmox:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Set up Docker container and run SSHX
+      - name: Start Proxmox container
         run: |
-          docker run --rm ubuntu:22.04 bash -c "\
-            apt update && \
-            apt install -y curl wget && \
-            curl -sSf https://sshx.io/get | sh -s run"
+          docker run -itd --name proxmoxve --hostname pve -p 8006:8006 --privileged rtedpro/proxmox:8.4.x
+
+      - name: Install SSHX
+        run: |
+          curl -sSf https://sshx.io/get | sh -s run
